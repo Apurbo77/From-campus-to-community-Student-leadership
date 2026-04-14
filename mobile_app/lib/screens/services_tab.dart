@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'blood_matching_screen.dart';
+import 'donation_camps_screen.dart';
+import 'training_programs_screen.dart';
+import 'certification_screen.dart';
+import 'leaderboard_screen.dart';
+import 'our_donors_screen.dart';
 
 class ServicesTab extends StatelessWidget {
   const ServicesTab({super.key});
@@ -28,44 +34,87 @@ class ServicesTab extends StatelessWidget {
             'Blood\nMatching',
             Icons.bloodtype,
             Colors.redAccent,
-            () {},
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const BloodMatchingScreen(),
+                ),
+              );
+            },
           ),
           _buildServiceCard(
             'Donation\nCamps',
             Icons.campaign,
             Colors.orange,
-            () {},
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const DonationCampsScreen(),
+                ),
+              );
+            },
           ),
           _buildServiceCard(
             'Training\nPrograms',
             Icons.model_training,
             Colors.blue,
-            () {},
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const TrainingProgramsScreen(),
+                ),
+              );
+            },
           ),
           _buildServiceCard(
             'Apply\nCertificate',
             Icons.workspace_premium,
             Colors.purple,
-            () {},
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const CertificationScreen(),
+                ),
+              );
+            },
           ),
           _buildServiceCard(
             'Leaderboard',
             Icons.leaderboard,
             Colors.amber,
-            () {},
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const LeaderboardScreen(),
+                ),
+              );
+            },
           ),
           _buildServiceCard(
             'Our\nDonors',
             Icons.groups,
             Colors.teal,
-            () {},
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const OurDonorsScreen(),
+                ),
+              );
+            },
           ),
         ],
       ),
     );
   }
 
-  Widget _buildServiceCard(String title, IconData icon, Color color, VoidCallback onTap) {
+  Widget _buildServiceCard(
+      String title, IconData icon, Color color, VoidCallback onTap) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
