@@ -12,101 +12,107 @@ class ServicesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Services',
-          style: GoogleFonts.inter(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        surfaceTintColor: Colors.transparent,
-      ),
-      backgroundColor: const Color(0xFFF8F9FA),
-      body: GridView.count(
-        crossAxisCount: 2,
-        padding: const EdgeInsets.all(24),
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
+    return SafeArea(
+      child: Column(
         children: [
-          _buildServiceCard(
-            'Blood\nMatching',
-            Icons.bloodtype,
-            Colors.redAccent,
-            () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const BloodMatchingScreen(),
-                ),
-              );
-            },
+          Padding(
+            padding: const EdgeInsets.all(24),
+            child: Text(
+              'Services',
+              style: GoogleFonts.inter(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xFF1A1A1A),
+              ),
+            ),
           ),
-          _buildServiceCard(
-            'Donation\nCamps',
-            Icons.campaign,
-            Colors.orange,
-            () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const DonationCampsScreen(),
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 2,
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              children: [
+                _buildServiceCard(
+                  'Blood\nMatching',
+                  Icons.bloodtype,
+                  Colors.redAccent,
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const BloodMatchingScreen(),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
-          _buildServiceCard(
-            'Training\nPrograms',
-            Icons.model_training,
-            Colors.blue,
-            () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const TrainingProgramsScreen(),
+                _buildServiceCard(
+                  'Donation\nCamps',
+                  Icons.campaign,
+                  Colors.orange,
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const DonationCampsScreen(),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
-          _buildServiceCard(
-            'Apply\nCertificate',
-            Icons.workspace_premium,
-            Colors.purple,
-            () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const CertificationScreen(),
+                _buildServiceCard(
+                  'Training\nPrograms',
+                  Icons.model_training,
+                  Colors.blue,
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const TrainingProgramsScreen(),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
-          _buildServiceCard(
-            'Leaderboard',
-            Icons.leaderboard,
-            Colors.amber,
-            () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const LeaderboardScreen(),
+                _buildServiceCard(
+                  'Apply\nCertificate',
+                  Icons.workspace_premium,
+                  Colors.purple,
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const CertificationScreen(),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
-          _buildServiceCard(
-            'Our\nDonors',
-            Icons.groups,
-            Colors.teal,
-            () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const OurDonorsScreen(),
+                _buildServiceCard(
+                  'Leaderboard',
+                  Icons.leaderboard,
+                  Colors.amber,
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const LeaderboardScreen(),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
+                _buildServiceCard(
+                  'Our\nDonors',
+                  Icons.groups,
+                  Colors.teal,
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const OurDonorsScreen(),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ],
       ),

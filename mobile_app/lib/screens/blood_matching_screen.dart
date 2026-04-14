@@ -16,6 +16,7 @@ class _BloodMatchingScreenState extends State<BloodMatchingScreen> {
   bool _isLoading = false;
   List<dynamic> _matchedDonors = [];
   String? _errorMessage;
+  bool _useMockData = false; // Set to true to test without backend
 
   final List<String> bloodGroups = [
     'O+',
@@ -28,13 +29,50 @@ class _BloodMatchingScreenState extends State<BloodMatchingScreen> {
     'AB-'
   ];
 
-  // Configure this with your backend URL
-  static const String backendUrl = 'http://192.168.1.100/api/match_donor.php';
+  // Update this with your actual backend URL
+  // Examples:
+  // - Local: http://localhost/api/match_donor.php
+  // - IP Address: http://192.168.1.100/api/match_donor.php
+  // - Domain: http://yourdomain.com/api/match_donor.php
+  static const String backendUrl = 'http://localhost/api/match_donor.php';
 
   @override
   void dispose() {
     _areaController.dispose();
     super.dispose();
+  }
+
+  // Mock data for testing without backend
+  List<dynamic> _getMockDonors() {
+    return [
+      {
+        'student_id': 'STU001',
+        'full_name': 'John Doe',
+        'blood_group': _selectedBloodGroup,
+        'area': _areaController.text,
+        'phone': '01712345678',
+        'availability_status': 'available',
+        'days_since': 30,
+      },
+      {
+        'student_id': 'STU002',
+        'full_name': 'Jane Smith',
+        'blood_group': _selectedBloodGroup,
+        'area': _areaController.text,
+        'phone': '01798765432',
+        'availability_status': 'available',
+        'days_since': 45,
+      },
+      {
+        'student_id': 'STU003',
+        'full_name': 'Ahmed Hassan',
+        'blood_group': _selectedBloodGroup,
+        'area': _areaController.text,
+        'phone': '01656543210',
+        'availability_status': 'available',
+        'days_since': 15,
+      },
+    ];
   }
 
   Future<void> _searchDonors() async {
@@ -52,11 +90,22 @@ class _BloodMatchingScreenState extends State<BloodMatchingScreen> {
     });
 
     try {
+      // Use mock data for testing if _useMockData is true
+      if (_useMockData) {
+        await Future.delayed(
+            const Duration(seconds: 1)); // Simulate network delay
+        setState(() {
+          _matchedDonors = _getMockDonors();
+          _isLoading = false;
+        });
+        return;
+      }
+
       final response = await http.post(
         Uri.parse(backendUrl),
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: {
-          'req_id': '1', // In production, this should be the actual request ID
+          'req_id': '1',
           'area': _areaController.text,
           'blood_group': _selectedBloodGroup,
         },
@@ -81,16 +130,18 @@ class _BloodMatchingScreenState extends State<BloodMatchingScreen> {
       } else {
         setState(() {
           _errorMessage =
-              'Failed to fetch donors. Status: ${response.statusCode}';
+              'Failed to fetch donors. Status: ${response.statusCode}\n\nMake sure your backend is running at: $backendUrl';
         });
       }
     } on TimeoutException {
       setState(() {
-        _errorMessage = 'Request timed out. Please try again.';
+        _errorMessage =
+            'Request timed out. Please check if the backend is running at:\n$backendUrl';
       });
     } catch (e) {
       setState(() {
-        _errorMessage = 'Error: ${e.toString()}';
+        _errorMessage =
+            'Connection Error: ${e.toString()}\n\nBackend URL: $backendUrl\n\nTip: Use mock data toggle to test the UI without a backend.';
       });
     } finally {
       setState(() {
@@ -135,13 +186,43 @@ class _BloodMatchingScreenState extends State<BloodMatchingScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Find Matching Donors',
-                    style: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF1A1A1A),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Find Matching Donors',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF1A1A1A),
+                        ),
+                      ),
+                      Tooltip(
+                        message: _useMockData
+                            ? 'Using test data (no backend needed)'
+                            : 'Using backend API',
+                        child: IconButton.filled(
+                          onPressed: () =>
+                              setState(() => _useMockData = !_useMockData),
+                          constraints: const BoxConstraints(
+                            minHeight: 32,
+                            minWidth: 32,
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll(
+                              _useMockData
+                                  ? Colors.green.withOpacity(0.2)
+                                  : Colors.grey.withOpacity(0.2),
+                            ),
+                          ),
+                          icon: Icon(
+                            _useMockData ? Icons.bug_report : Icons.cloud,
+                            size: 18,
+                            color: _useMockData ? Colors.green : Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 16),
 
