@@ -1,0 +1,21 @@
+/* css/style.css - simple clean layout */
+*{box-sizing:border-box}
+body{font-family:Inter, Arial, sans-serif;margin:0;background:#f5f7fb;color:#111}
+.header{background:#0b5fff;color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.container{max-width:980px;margin:28px auto;padding:18px;background:#fff;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+.grid{display:grid;grid-template-columns:1fr 320px;gap:18px}
+.card{padding:14px;background:#fff;border:1px solid #eef2ff;border-radius:10px}
+.searchBar{display:flex;gap:8px;margin-bottom:12px}
+.input{padding:10px;border:1px solid #ddd;border-radius:8px;flex:1}
+.btn{background:#0b5fff;color:#fff;padding:10px 12px;border:none;border-radius:8px;cursor:pointer}
+.small{font-size:13px;color:#556}
+.badge{display:inline-block;padding:4px 8px;border-radius:12px;background:#eef5ff;color:#063a9f;margin-right:6px;font-weight:600}
+.profile{display:flex;gap:12px;align-items:center}
+.profile img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid #eee}
+.list{list-style:none;padding:0;margin:0}
+.list li{padding:8px 0;border-bottom:1px dashed #f0f4ff}
+.footer{padding:14px;text-align:center;color:#666;font-size:13px}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:8px;border:1px solid #eee;text-align:left}
+
+
